@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MotorMart</title>
+
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
@@ -28,34 +29,6 @@
         <div class="loader"></div>
     </div>
 
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__widget">
-            <a href="#" class="primary-btn">Login</a>
-            <a href="#" class="primary-btn">Registrazione</a>
-        </div>
-        <div class="offcanvas__logo">
-            <a href="./"><img src="{% static "./img/logo-new.png" %}" alt=""></a>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <ul class="offcanvas__widget__add">
-            <li><i class="fa fa-clock-o"></i> Week day: 08:00 am to 18:00 pm</li>
-            <li><i class="fa fa-envelope-o"></i> Info.colorlib@gmail.com</li>
-        </ul>
-        <div class="offcanvas__phone__num">
-            <i class="fa fa-phone"></i>
-            <span>(+12) 345 678 910</span>
-        </div>
-        <div class="offcanvas__social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-google"></i></a>
-            <a href="#"><i class="fa fa-instagram"></i></a>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
-
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container">
@@ -69,8 +42,8 @@
                     <div class="header__nav">
                         <nav class="header__menu">
                             <ul>
-                                <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a href="#">Annunci</a></li>
+                                <li class="active"><a href="./">Home</a></li>
+                                <li><a href="{% url 'annunci:annunci_list' %}">Annunci</a></li>
                                 <li><a href="#">Profilo</a></li>
                             </ul>
                         </nav>
@@ -86,10 +59,11 @@
 
                         {% else %}
                             <div class="header__nav__widget">
-                                <a href="./login" class="primary-btn">Login</a>
-                                <a href="./register" class="primary-btn">Registrazione</a>
+                                <a href="{% url 'login' %}" class="primary-btn">Login</a>
+                                <a href="{% url 'register' %}" class="primary-btn">Registrazione</a>
                             </div>
                         {% endif %}
+
                     </div>
                 </div>
             </div>
@@ -109,15 +83,11 @@
                         <div class="hero__text__title">
                             <span>Trova la tua auto ideale</span>
                         </div>
-                      
                     </div>
                 </div>
+
                 <div class="col-lg-5">
                     <div class="hero__tab">
-                        <ul class="nav nav-tabs" role="tablist">
-                            
-                            
-                        </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="hero__tab__form">
@@ -205,7 +175,7 @@
                                                     <option value="">Acura</option>
                                                     <option value="">Audi</option>
                                                     <option value="">Bentley</option>
-                                                    <<option value="">BMW</option>
+                                                    <option value="">BMW</option>
                                                     <option value="">Bugatti</option>
                                                 </select>
                                             </div>
@@ -293,8 +263,6 @@
                         </div>
                     </div>
                 </div>
-    
-      
             </div>
         </div>
     </section>
@@ -313,6 +281,7 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="col-lg-2 col-md-3">
                     <div class="footer__widget">
                         <h5>Infomation</h5>
@@ -321,6 +290,7 @@
                         </ul>
                     </div>
                 </div>
+                
                 <div class="col-lg-3 col-md-6">
                     <div class="footer__brand">
                         <h5>Top Brand</h5>
@@ -336,17 +306,6 @@
         </div>
     </footer>
     <!-- Footer Section End -->
-
-    <!-- Search Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch">+</div>
-            <form class="search-model-form">
-                <input type="text" id="search-input" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search End -->
 
     <!-- Js Plugins -->
     <script src="{% static "./js/jquery-3.3.1.min.js" %}"></script>
