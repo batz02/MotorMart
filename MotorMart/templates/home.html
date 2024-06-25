@@ -70,16 +70,18 @@
                         <nav class="header__menu">
                             <ul>
                                 <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a href="./cars">Auto</a></li>
-                                <li><a href="./about.html">About</a></li>
-                                <li><a href="./contact.html">Contact</a></li>
+                                <li><a href="#">Annunci</a></li>
+                                <li><a href="#">Profilo</a></li>
                             </ul>
                         </nav>
 
                         {% if user.is_authenticated  %}
                             <div class="header__nav__widget">
-                                <a href="./logout" class="primary-btn">Logout</a>
-                                <a href="./register" class="primary-btn">Registrazione</a>
+                                <form id="logout-form" method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="primary-btn">Logout</button>
+                                </form>
+                                <a href="#" class="primary-btn">Crea annuncio</a>
                             </div>
 
                         {% else %}
