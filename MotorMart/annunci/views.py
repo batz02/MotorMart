@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from django.views.generic.list import ListView
+from .models import *
 
 # Create your views here.
-def annunci_list(request):
-    return render(request, template_name="annunci/cars.html")
+
+class ListingsView(ListView):
+    model = Annuncio
+    template_name = "annunci/cars.html"
