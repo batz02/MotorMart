@@ -5,5 +5,5 @@ app_name = "annunci"
 
 urlpatterns = [
     path("", ListingsView.as_view(), name="annunci_list"),
-    
+    path("<pk>/", details, name="details")
 ]
