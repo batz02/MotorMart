@@ -17,6 +17,7 @@ class Annuncio(models.Model):
     carburante = models.CharField(max_length=20)
     cambio = models.CharField(max_length=20)
     colore = models.CharField(max_length=30)
+    immagine = models.CharField(max_length=64)
     descrizione = models.CharField(max_length=200)
-    utente = models.ForeignKey(User,on_delete=models.CASCADE,related_name="copie")
+    utente = models.ForeignKey(User,on_delete=models.CASCADE)
     data_inserimento = models.DateTimeField(default=datetime.now, blank=True)

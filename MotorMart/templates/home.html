@@ -52,9 +52,11 @@
                             <div class="header__nav__widget">
                                 <form id="logout-form" method="post" action="{% url 'logout' %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="primary-btn">Logout</button>
+                                    <button class="primary-btn">Logout</button>
                                 </form>
-                                <a href="#" class="primary-btn">Crea annuncio</a>
+                                <form method="get" action="{% url 'annunci:create' %}">
+                                    <button class="primary-btn">Crea annuncio</button>
+                                </form>
                             </div>
 
                         {% else %}
@@ -91,48 +93,49 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="hero__tab__form">
-                                    <form>
+                                    <form method="POST" action="{% url 'annunci:search' %}">
+                                        {% csrf_token %}
                                         <div class="select-list">
                                             <div class="select-list-item">
                                                 <p>Anno</p>
-                                                <select>
+                                                <select name="anno">
                                                     <option data-display=" ">Anno</option>
-                                                    <option value="">2020</option>
-                                                    <option value="">2019</option>
-                                                    <option value="">2018</option>
-                                                    <option value="">2017</option>
-                                                    <option value="">2016</option>
-                                                    <option value="">2015</option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2019">2019</option>
+                                                    <option value="2018">2018</option>
+                                                    <option value="2017">2017</option>
+                                                    <option value="2016">2016</option>
+                                                    <option value="2015">2015</option>
                                                 </select>
                                             </div>
                                             <div class="select-list-item">
                                                 <p>Marchio</p>
-                                                <select>
+                                                <select name="marchio">
                                                     <option data-display=" ">Marchio</option>
-                                                    <option value="">Acura</option>
-                                                    <option value="">Audi</option>
-                                                    <option value="">Bentley</option>
-                                                    <option value="">BMW</option>
-                                                    <option value="">Bugatti</option>
+                                                    <option value="Acura">Acura</option>
+                                                    <option value="Audi">Audi</option>
+                                                    <option value="Bentley">Bentley</option>
+                                                    <option value="BMW">BMW</option>
+                                                    <option value="Bugatti">Bugatti</option>
                                                 </select>
                                             </div>
                                             <div class="select-list-item">
                                                 <p>Modello</p>
-                                                <select>
+                                                <select name="modello">
                                                     <option data-display=" ">Modello</option>
-                                                    <option value="">Q3</option>
-                                                    <option value="">A4 </option>
-                                                    <option value="">AVENTADOR</option>
+                                                    <option value="Q3">Q3</option>
+                                                    <option value="A4">A4</option>
+                                                    <option value="AVENTADOR">AVENTADOR</option>
                                                 </select>
                                             </div>
                                             <div class="select-list-item">
                                                 <p>Chilometraggio</p>
-                                                <select>
+                                                <select name="chilometraggio">
                                                     <option data-display=" ">Chilometraggio</option>
-                                                    <option value="">27</option>
-                                                    <option value="">25</option>
-                                                    <option value="">15</option>
-                                                    <option value="">10</option>
+                                                    <option value="27">27</option>
+                                                    <option value="25">25</option>
+                                                    <option value="15">15</option>
+                                                    <option value="10">10</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -142,75 +145,12 @@
                                                 <div class="price-range"></div>
                                                 <div class="range-slider">
                                                     <div class="price-input">
-                                                        <input type="text" id="amount">
+                                                        <input type="text" id="amount" name="prezzo">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <button type="submit" class="site-btn">Cerca</button>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
-                                <div class="hero__tab__form">
-                                    <h2>Buy Your Dream Car</h2>
-                                    <form>
-                                        <div class="select-list">
-                                            <div class="select-list-item">
-                                                <p>Select Year</p>
-                                                <select>
-                                                    <option data-display=" ">Select Year</option>
-                                                    <option value="">2020</option>
-                                                    <option value="">2019</option>
-                                                    <option value="">2018</option>
-                                                    <option value="">2017</option>
-                                                    <option value="">2016</option>
-                                                    <option value="">2015</option>
-                                                </select>
-                                            </div>
-                                            <div class="select-list-item">
-                                                <p>Select Brand</p>
-                                                <select>
-                                                    <option data-display=" ">Select Brand</option>
-                                                    <option value="">Acura</option>
-                                                    <option value="">Audi</option>
-                                                    <option value="">Bentley</option>
-                                                    <option value="">BMW</option>
-                                                    <option value="">Bugatti</option>
-                                                </select>
-                                            </div>
-                                            <div class="select-list-item">
-                                                <p>Select Model</p>
-                                                <select>
-                                                    <option data-display=" ">Select Model</option>
-                                                    <option value="">Q3</option>
-                                                    <option value="">A4 </option>
-                                                    <option value="">AVENTADOR</option>
-                                                </select>
-                                            </div>
-                                            <div class="select-list-item">
-                                                <p>Select Mileage</p>
-                                                <select>
-                                                    <option data-display=" ">Select Mileage</option>
-                                                    <option value="">27</option>
-                                                    <option value="">25</option>
-                                                    <option value="">15</option>
-                                                    <option value="">10</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="car-price">
-                                            <p>Prezzo:</p>
-                                            <div class="price-range-wrap">
-                                                <div class="price-range"></div>
-                                                <div class="range-slider">
-                                                    <div class="price-input">
-                                                        <input type="text" id="amount">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <button type="submit" class="site-btn">Searching</button>
                                     </form>
                                 </div>
                             </div>
@@ -228,17 +168,40 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section-title">
-                        <span>Our Car</span>
-                        <h2>Best Vehicle Offers</h2>
+                        <span>Le nostre auto</span>
+                        <h2>Le ultime aggiunte</h2>
                     </div>
-                    <ul class="filter__controls">
-                        <li class="active" data-filter="*">Most Researched</li>
-                        <li data-filter=".sale">Latest on sale</li>
-                    </ul>
+                    
                 </div>
             </div>
             <div class="row car-filter">
+
                 <div class="col-lg-3 col-md-4 col-sm-6 mix">
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="car__item">
                         <div class="car__item__pic__slider owl-carousel">
                             <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
@@ -263,6 +226,160 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-3 col-md-4 col-sm-6 mix">
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix">
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix">
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="car__item">
+                        <div class="car__item__pic__slider owl-carousel">
+                            <img src="{% static "./img/cars/car-1.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-8.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-6.jpg" %}" alt="">
+                            <img src="{% static "./img/cars/car-3.jpg" %}" alt="">
+                        </div>
+                        <div class="car__item__text">
+                            <div class="car__item__text__inner">
+                                <div class="label-date">2016</div>
+                                <h5><a href="#">Porsche cayenne turbo s</a></h5>
+                                <ul>
+                                    <li><span>35,000</span> mi</li>
+                                    <li>Auto</li>
+                                    <li><span>700</span> hp</li>
+                                </ul>
+                            </div>
+                            <div class="car__item__price">
+                                <span class="car-option">For Rent</span>
+                                <h6>$218<span>/Month</span></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
             </div>
         </div>
     </section>

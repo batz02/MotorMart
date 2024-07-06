@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'annunci'
+    'annunci',
+    'chat',
+    'recensioni'
 ]
 
 MIDDLEWARE = [
@@ -113,6 +115,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+APPEND_SLASH=False
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -125,5 +129,5 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = "/?login=ok"
+LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/login/?auth=notok"

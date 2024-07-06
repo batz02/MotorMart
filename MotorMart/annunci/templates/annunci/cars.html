@@ -73,23 +73,7 @@
     </header>
     <!-- Header Section End -->
 
-    <!-- Breadcrumb End -->
-    <div class="breadcrumb-option set-bg" data-setbg="img/breadcrumb-bg.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                        <h2>Car Listing</h2>
-                        <div class="breadcrumb__links">
-                            <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                            <span>About</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb Begin -->
+
 
     <!-- Car Section Begin -->
     <section class="car spad">
@@ -102,7 +86,7 @@
                             <h5>Filtri</h5>
                             <form action="#">
                                 <select>
-                                    <option data-display="Brand">Seleziona marca</option>
+                                    <option data-display="Marca">Seleziona marca</option>
                                     <option value="">Acura</option>
                                     <option value="">Audi</option>
                                     <option value="">Bentley</option>
@@ -110,7 +94,7 @@
                                     <option value="">Bugatti</option>
                                 </select>
                                 <select>
-                                    <option data-display="Model">Seleziona modello</option>
+                                    <option data-display="Modello">Seleziona modello</option>
                                     <option value="">Q3</option>
                                     <option value="">A4 </option>
                                     <option value="">AVENTADOR</option>
@@ -133,14 +117,7 @@
                                     <option value="">10</option>
                                 </select>
                                 <select>
-                                    <option value="">Engine</option>
-                                    <option value="">BS3</option>
-                                    <option value="">BS4</option>
-                                    <option value="">BS5</option>
-                                    <option value="">BS6</option>
-                                </select>
-                                <select>
-                                    <option value="">Colors</option>
+                                    <option value="">Colore</option>
                                     <option value="">Red</option>
                                     <option value="">Blue</option>
                                     <option value="">Black</option>
@@ -165,29 +142,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
-                    <div class="car__filter__option">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6">
-                                <div class="car__filter__option__item">
-                                    <h6>Show On Page</h6>
-                                    <select>
-                                        <option value="">9 Car</option>
-                                        <option value="">15 Car</option>
-                                        <option value="">20 Car</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="car__filter__option__item car__filter__option__item--right">
-                                    <h6>Sort By</h6>
-                                    <select>
-                                        <option value="">Price: Highest Fist</option>
-                                        <option value="">Price: Lowest Fist</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="row">
 
                         
@@ -201,16 +156,22 @@
                                     <div class="car__item__text">
                                         <div class="car__item__text__inner">
                                             <div class="label-date">{{ a.anno }}</div>
-                                            <h5><a href="{% url 'annunci:details' a.pk %}">{{ a.marca }} - {{ a.modello }}</a></h5>
+                                            {% if user.is_authenticated  %}
+                                                <h5><a href="{% url 'annunci:details' a.pk %}">{{ a.marca }} - {{ a.modello }}</a></h5>
+
+                                            {% else %}
+                                                <h5><a href="#">{{ a.marca }} - {{ a.modello }}</a></h5>
+                                            {% endif %}
+                                            
                                             <ul>
                                                 <li><span>{{ a.chilometraggio }}</span> km</li>
-                                                <li>Auto</li>
+                                                <li><span>{{ a.cambio }}</span></li>
                                                 <li><span>{{ a.potenza }}</span> cv</li>
                                             </ul>
                                         </div>
                                         <div class="car__item__price">
-                                            <span class="car-option">For Rent</span>
-                                            <h6>$218<span>/Month</span></h6>
+                                            <span class="car-option">Prezzo</span>
+                                            <h6>€ {{ a.prezzo }}</span></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -218,12 +179,7 @@
                         {%endfor%}
                         
                     </div>
-                    <div class="pagination__option">
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#"><span class="arrow_carrot-2right"></span></a>
-                    </div>
+                    
                 </div>
             </div>
         </div>
