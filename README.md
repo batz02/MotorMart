@@ -1,4 +1,4 @@
-##### Avvio del programma
+### Avvio del programma
 
 - Avere sul proprio pc installato Python3 e PipEnv
 - Posizionandosi nella cartella del progetto dove è presente il file `Pipfile` avviare la shell di PipEnv tramite il comando:
