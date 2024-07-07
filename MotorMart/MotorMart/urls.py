@@ -28,4 +28,5 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
 
     path("annunci/", include("annunci.urls")),
+    path("chat/", include("chat.urls")),
 ]
