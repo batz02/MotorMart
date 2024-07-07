@@ -1,18 +1,108 @@
-{% extends 'basebs.html' %}
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MotorMart</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
-{% block title %} Logout {% endblock %} 
+    <!-- Css Styles -->
+    <link rel="stylesheet" href='{% static "./css/bootstrap.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/font-awesome.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/elegant-icons.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/nice-select.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/magnific-popup.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/jquery-ui.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/owl.carousel.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/slicknav.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/style.css" %}' type="text/css">
+</head>
 
-{% block header1 %}
-  <h1>Pagina di Logout</h1>
-{% endblock %}
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
-{% block content %} 
+    <!-- Header Section Begin -->
+    <header class="header">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-2">
+                  <div class="header__logo">
+                      <a href="./"><img src="{% static "./img/logo-new.png" %}" alt=""></a>
+                  </div>
+              </div>
+              <div class="col-lg-10">
+                  <div class="header__nav">
+                      <nav class="header__menu">
+                          <ul>
+                              <li class="active"><a href="./">Home</a></li>
+                              <li><a href="{% url 'annunci:annunci_list' %}">Annunci</a></li>
+                              <li><a href="#">Profilo</a></li>
+                          </ul>
+                      </nav>
+                          <div class="header__nav__widget">
+                              <a href="{% url 'login' %}" class="primary-btn">Login</a>
+                              <a href="{% url 'register' %}" class="primary-btn">Registrazione</a>
+                          </div>
 
-<h2>Logout eseguito con successo</h2>
-<h5>Ci vediamo presto!</h5>
+                  </div>
+              </div>
+          </div>
+          <div class="canvas__open">
+              <span class="fa fa-bars"></span>
+          </div>
+      </div>
+  </header>
+    <!-- Header Section End -->
 
-{% endblock %}
+    <!-- Hero Section Begin -->
+    <section class="hero spad set-bg" data-setbg="{% static "./img/hero-bg-created.jpg" %}">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-5">
+                    <div class="hero__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            
+                            
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="hero__tab__form">
+                                    <center>
+                                        {% if "notok" in request.GET.auth %}
+                                            <div class="alert alert-danger" role="alert">
+                                            Accesso non consentito...Eseguire login
+                                            </div>
+                                        {% endif %}
+                                        <h4>Logout eseguito con successo</h4>
+                                      </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
 
-{% block footer %} {% endblock %}
+    <!-- Js Plugins -->
+    <script src="{% static "./js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "./js/bootstrap.min.js" %}"></script>
+    <script src="{% static "./js/jquery.nice-select.min.js" %}"></script>
+    <script src="{% static "./js/jquery-ui.min.js" %}"></script>
+    <script src="{% static "./js/jquery.magnific-popup.min.js" %}"></script>
+    <script src="{% static "./js/mixitup.min.js" %}"></script>
+    <script src="{% static "./js/jquery.slicknav.js" %}"></script>
+    <script src="{% static "./js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "./js/main.js" %}"></script>
+</body>
+
+</html>
