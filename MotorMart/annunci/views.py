@@ -11,45 +11,48 @@ class ListingsView(ListView):
     template_name = "annunci/cars.html"
 
 @login_required
-def details(request,pk):
+def details(request, pk):
     annuncio = Annuncio.objects.get(id=pk)
-    ctx = { "annuncio" : annuncio }
-    return render(request,"annunci/details.html", ctx)
+    ctx = {"annuncio": annuncio}
+    return render(request, "annunci/details.html", ctx)
 
 
 def search(request):
-
     if request.method == "POST":
-
         anno = request.POST.get('anno')
-        marchio = None
-        modello = None
-        chilometraggio = None
-        prezzo = None
+        marca = request.POST.get('marca')  # Updated field name
+        modello = request.POST.get('modello')
+        chilometraggio = request.POST.get('chilometraggio')
+        prezzo = request.POST.get('prezzo')
 
-        annunci_filtered = Annuncio.objects.filter(
-            anno=anno,
-            marchio=marchio,
-            modello=modello,
-            chilometraggio=chilometraggio,
-            prezzo=prezzo
-        )
+        # Construct the filter dictionary
+        filter_kwargs = {}
+        if anno:
+            filter_kwargs['anno'] = anno
+        if marca:
+            filter_kwargs['marca'] = marca
+        if modello:
+            filter_kwargs['modello'] = modello
+        if chilometraggio:
+            filter_kwargs['chilometraggio'] = chilometraggio
+        if prezzo:
+            filter_kwargs['prezzo'] = prezzo
 
-        print(annunci_filtered)
+        annunci_filtered = Annuncio.objects.filter(**filter_kwargs)
+        return render(request, "annunci/cars.html", {'object_list': annunci_filtered})
 
-        return render(request,"annunci/cars.html", {'object_list': annunci_filtered})
-        
 
 def create(request):
-
     if request.method == 'POST':
         form = CreaAnnuncio(request.POST, request.FILES)
         if form.is_valid():
-            annuncio = form.save(commit=False) 
-            annuncio.utente = request.user  
+            annuncio = form.save(commit=False)
+            annuncio.utente = request.user
             annuncio.save()
             return redirect('annunci:annunci_list')
+        else:
+            print(form.errors)  # Debug line to print form errors
     else:
         form = CreaAnnuncio()
-
+    
     return render(request, "annunci/create.html", {'form': form})

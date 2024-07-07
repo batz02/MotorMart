@@ -1,9 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
-
-
-# Create your models here.
+from django.utils import timezone
 
 class Annuncio(models.Model):
     marca = models.CharField(max_length=20)
@@ -19,5 +16,8 @@ class Annuncio(models.Model):
     colore = models.CharField(max_length=30)
     immagine = models.ImageField(upload_to ='media/uploads/') 
     descrizione = models.CharField(max_length=200)
-    utente = models.ForeignKey(User,on_delete=models.CASCADE)
-    data_inserimento = models.DateTimeField(default=datetime.now, blank=True)
+    utente = models.ForeignKey(User, on_delete=models.CASCADE)
+    data_inserimento = models.DateTimeField(default=timezone.now, blank=True)
+
+    def __str__(self):
+        return self.modello
