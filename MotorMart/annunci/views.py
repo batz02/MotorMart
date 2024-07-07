@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import *
+from .forms import *
 
-# Create your views here.
 
 class ListingsView(ListView):
     model = Annuncio
@@ -22,16 +22,34 @@ def search(request):
     if request.method == "POST":
 
         anno = request.POST.get('anno')
-        marchio = request.POST.get('marchio')
-        modello = request.POST.get('modello')
-        chilometraggio = request.POST.get('chilometraggio')
-        prezzo = request.POST.get('prezzo')
+        marchio = None
+        modello = None
+        chilometraggio = None
+        prezzo = None
 
-        print(anno)
-        return render(request,"annunci/cars.html")
-        return HttpResponse(f"Searched for: Anno={anno}, Marchio={marchio}, Modello={modello}, Chilometraggio={chilometraggio}, Prezzo={prezzo}")
+        annunci_filtered = Annuncio.objects.filter(
+            anno=anno,
+            marchio=marchio,
+            modello=modello,
+            chilometraggio=chilometraggio,
+            prezzo=prezzo
+        )
 
+        print(annunci_filtered)
+
+        return render(request,"annunci/cars.html", {'object_list': annunci_filtered})
+        
 
 def create(request):
-    
-    return render(request,"annunci/create.html")
+
+    if request.method == 'POST':
+        form = CreaAnnuncio(request.POST, request.FILES)
+        if form.is_valid():
+            annuncio = form.save(commit=False) 
+            annuncio.utente = request.user  
+            annuncio.save()
+            return redirect('annunci:annunci_list')
+    else:
+        form = CreaAnnuncio()
+
+    return render(request, "annunci/create.html", {'form': form})

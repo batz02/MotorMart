@@ -135,17 +135,7 @@
     /*-----------------------
 		Range Slider
 	------------------------ */
-    var rangeSlider = $(".price-range");
-    rangeSlider.slider({
-        range: true,
-        min: 1,
-        max: 4000,
-        values: [800, 3200],
-        slide: function (event, ui) {
-            $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1] + ".100");
-        }
-    });
-    $("#amount").val("$" + $(".price-range").slider("values", 0) + " - $" + $(".price-range").slider("values", 1) + ".100");
+
 
     var carSlider = $(".car-price-range");
     carSlider.slider({

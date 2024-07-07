@@ -93,6 +93,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="hero__tab__form">
+                                    
                                     <form method="POST" action="{% url 'annunci:search' %}">
                                         {% csrf_token %}
                                         <div class="select-list">
@@ -100,56 +101,53 @@
                                                 <p>Anno</p>
                                                 <select name="anno">
                                                     <option data-display=" ">Anno</option>
-                                                    <option value="2020">2020</option>
-                                                    <option value="2019">2019</option>
-                                                    <option value="2018">2018</option>
-                                                    <option value="2017">2017</option>
-                                                    <option value="2016">2016</option>
-                                                    <option value="2015">2015</option>
+                                                    {% for anno in anni %}
+                                                        <option value="{{anno}}">{{anno}}</option>
+                                                    {%endfor%}
                                                 </select>
                                             </div>
                                             <div class="select-list-item">
                                                 <p>Marchio</p>
                                                 <select name="marchio">
                                                     <option data-display=" ">Marchio</option>
-                                                    <option value="Acura">Acura</option>
-                                                    <option value="Audi">Audi</option>
-                                                    <option value="Bentley">Bentley</option>
-                                                    <option value="BMW">BMW</option>
-                                                    <option value="Bugatti">Bugatti</option>
+                                                    {% for marca in marche %}
+                                                        <option value="{{marca}}">{{marca}}</option>
+                                                    {%endfor%}
                                                 </select>
                                             </div>
                                             <div class="select-list-item">
                                                 <p>Modello</p>
                                                 <select name="modello">
                                                     <option data-display=" ">Modello</option>
-                                                    <option value="Q3">Q3</option>
-                                                    <option value="A4">A4</option>
-                                                    <option value="AVENTADOR">AVENTADOR</option>
+                                                    {% for modello in modelli %}
+                                                        <option value="{{modello}}">{{modello}}</option>
+                                                    {%endfor%}
                                                 </select>
                                             </div>
                                             <div class="select-list-item">
                                                 <p>Chilometraggio</p>
                                                 <select name="chilometraggio">
                                                     <option data-display=" ">Chilometraggio</option>
-                                                    <option value="27">27</option>
-                                                    <option value="25">25</option>
-                                                    <option value="15">15</option>
-                                                    <option value="10">10</option>
+                                                    <option value="0-25000">0-25000</option>
+                                                    <option value="25001-50000">25001-50000</option>
+                                                    <option value="50001-75000">50001-75000</option>
+                                                    <option value="75001-100000">75001-100000</option>
+                                                    <option value="100001">100000+</option>
+                                                </select>
+                                            </div>
+                                            <div class="select-list-item">
+                                                <p>Prezzo</p>
+                                                <select name="prezzo">
+                                                    <option data-display=" ">Prezzo</option>
+                                                    <option value="0-25000">€ &lt;25000</option>
+                                                    <option value="25001-50000">€ 25001 - € 50000</option>
+                                                    <option value="50001-75000">€ 50001 - € 75000</option>
+                                                    <option value="75001-100000">€ 75001 - € 100000</option>
+                                                    <option value="100001">€ 100000+</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="car-price">
-                                            <p>Prezzo:</p>
-                                            <div class="price-range-wrap">
-                                                <div class="price-range"></div>
-                                                <div class="range-slider">
-                                                    <div class="price-input">
-                                                        <input type="text" id="amount" name="prezzo">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                         <button type="submit" class="site-btn">Cerca</button>
                                     </form>
                                 </div>
