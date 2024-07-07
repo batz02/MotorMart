@@ -83,8 +83,61 @@
                             <div class="row">
                                 <form method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
-                                    {{ form.as_p }}
-                                    <button type="submit" class="primary-btn">Submit Now</button>
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <p>
+                                            <label for="{{ form.marca.id_for_label }}">{{ form.marca.label }}</label>
+                                            {{ form.marca }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.modello.id_for_label }}">{{ form.modello.label }}</label>
+                                            {{ form.modello }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.anno.id_for_label }}">{{ form.anno.label }}</label>
+                                            {{ form.anno }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.prezzo.id_for_label }}">{{ form.prezzo.label }}</label>
+                                            {{ form.prezzo }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.chilometraggio.id_for_label }}">{{ form.chilometraggio.label }}</label>
+                                            {{ form.chilometraggio }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.potenza.id_for_label }}">{{ form.potenza.label }}</label>
+                                            {{ form.potenza }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.cilindrata.id_for_label }}">{{ form.cilindrata.label }}</label>
+                                            {{ form.cilindrata }}
+                                        </p>
+                                        <p>
+                                            {{ form.stato }}
+                                            <label for="{{ form.stato.id_for_label }}">{{ form.stato.label }}</label>
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.carburante.id_for_label }}">{{ form.carburante.label }}</label>
+                                            {{ form.carburante }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.cambio.id_for_label }}">{{ form.cambio.label }}</label>
+                                            {{ form.cambio }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.colore.id_for_label }}">{{ form.colore.label }}</label>
+                                            {{ form.colore }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.descrizione.id_for_label }}">{{ form.descrizione.label }}</label>
+                                            {{ form.descrizione }}
+                                        </p>
+                                        <p>
+                                            <label for="{{ form.immagine.id_for_label }}">{{ form.immagine.label }}</label>
+                                            {{ form.immagine }}
+                                        </p>
+                                    <button type="submit" class="primary-btn">Inserisci</button>
                                 </form>
                             </div>
                 </div>

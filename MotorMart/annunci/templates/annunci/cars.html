@@ -84,59 +84,56 @@
                         
                         <div class="car__filter">
                             <h5>Filtri</h5>
-                            <form action="#">
-                                <select>
-                                    <option data-display="Marca">Seleziona marca</option>
-                                    <option value="">Acura</option>
-                                    <option value="">Audi</option>
-                                    <option value="">Bentley</option>
-                                    <option value="">BMW</option>
-                                    <option value="">Bugatti</option>
-                                </select>
-                                <select>
-                                    <option data-display="Modello">Seleziona modello</option>
-                                    <option value="">Q3</option>
-                                    <option value="">A4 </option>
-                                    <option value="">AVENTADOR</option>
-                                </select>
-                                <select>
-                                    <option value="">Condition</option>
-                                    <option value="">First Hand</option>
-                                    <option value="">Second Hand</option>
-                                </select>
-                                <select>
-                                    <option value="">Cambio</option>
-                                    <option value="">Manuale</option>
-                                    <option value="">Automatico</option>
-                                </select>
-                                <select>
-                                    <option value="">Chilometraggio</option>
-                                    <option value="">27</option>
-                                    <option value="">20</option>
-                                    <option value="">15</option>
-                                    <option value="">10</option>
-                                </select>
-                                <select>
-                                    <option value="">Colore</option>
-                                    <option value="">Red</option>
-                                    <option value="">Blue</option>
-                                    <option value="">Black</option>
-                                    <option value="">Yellow</option>
-                                </select>
-                                <div class="filter-price">
-                                    <p>Price:</p>
-                                    <div class="price-range-wrap">
-                                        <div class="filter-price-range"></div>
-                                        <div class="range-slider">
-                                            <div class="price-input">
-                                                <input type="text" id="filterAmount">
-                                            </div>
-                                        </div>
+                            <form method="POST" action="{% url 'annunci:search' %}">
+                                {% csrf_token %}
+                                <div class="select-list">
+                                    <div class="select-list-item">
+                                        <select >
+                                            <option data-display="Anno">Anno</option>
+                                            {% for anno in anni %}
+                                                <option value="{{anno}}">{{anno}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="select-list-item">
+                                        <select>
+                                            <option data-display="Marchio">Marchio</option>
+                                            {% for marca in marche %}
+                                                <option value="{{marca}}">{{marca}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="select-list-item">
+                                        <select>
+                                            <option data-display="Modello">Modello</option>
+                                            {% for modello in modelli %}
+                                                <option value="{{modello}}">{{modello}}</option>
+                                            {%endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="select-list-item">
+                                        <select>
+                                            <option data-display="Chilometraggio">Chilometraggio</option>
+                                            <option value="0-25000">0-25000</option>
+                                            <option value="25001-50000">25001-50000</option>
+                                            <option value="50001-75000">50001-75000</option>
+                                            <option value="75001-100000">75001-100000</option>
+                                            <option value="100001">100000+</option>
+                                        </select>
+                                    </div>
+                                    <div class="select-list-item">
+                                        <select>
+                                            <option data-display="Prezzo">Prezzo</option>
+                                            <option value="0-25000">€ &lt;25000</option>
+                                            <option value="25001-50000">€ 25001 - € 50000</option>
+                                            <option value="50001-75000">€ 50001 - € 75000</option>
+                                            <option value="75001-100000">€ 75001 - € 100000</option>
+                                            <option value="100001">€ 100000+</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="car__filter__btn">
-                                    <button type="submit" class="site-btn">Reset FIlter</button>
-                                </div>
+                                
+                                <button type="submit" class="site-btn">Aggiorna</button>
                             </form>
                         </div>
                     </div>
