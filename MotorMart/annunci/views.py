@@ -75,7 +75,7 @@ def search(request):
             except ValueError:
                 pass
 
-        annunci_filtered = Annuncio.objects.filter(**filter_kwargs)
+        annunci_filtered = Annuncio.objects.filter(**filter_kwargs).order_by('marca','modello')
 
         marche = sorted({annuncio.marca for annuncio in Annuncio.objects.all()})
         modelli = sorted({annuncio.modello for annuncio in Annuncio.objects.all()})
