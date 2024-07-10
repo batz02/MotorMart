@@ -1,12 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from django.utils import timezone
 
-# Create your models here.
 
 class Recensione(models.Model):
-    utente_inserimento = models.ForeignKey(User,on_delete=models.CASCADE, related_name="utente_ins")
-    utente_riferimento = models.ForeignKey(User,on_delete=models.CASCADE, related_name="utente_rif")
-    descrizione = models.CharField(max_length=200)
-    rating = models.IntegerField()
-    data_inserimento = models.DateTimeField(default=datetime.now, blank=True)
+    
+    rating_opzioni = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+
+    recensore = models.ForeignKey(User,on_delete=models.CASCADE, related_name="recensore")
+    venditore = models.ForeignKey(User,on_delete=models.CASCADE, related_name="venditore")
+    descrizione = models.CharField(max_length=200, null=True, blank=True)
+    rating = models.IntegerField(choices=rating_opzioni)
+    data_inserimento = models.DateTimeField(default=timezone.now, blank=True)
+
+    class Meta:
+        unique_together = ('recensore', 'venditore')

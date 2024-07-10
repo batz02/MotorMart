@@ -34,32 +34,43 @@
             <div class="row">
                 <div class="col-lg-2">
                     <div class="header__logo">
-                        <a href="./"><img src="{% static "./img/logo-new.png" %}" alt=""></a>
+                        <a href="{% url 'home' %}"><img src="{% static "./img/logo-new.png" %}" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-10">
                     <div class="header__nav">
                         <nav class="header__menu">
                             <ul>
-                                <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a href="./cars">Auto</a></li>
-                                <li><a href="./about.html">About</a></li>
-                                <li><a href="./contact.html">Contact</a></li>
+                                {% if user.is_authenticated %}
+                                    <li>Benvenuto, {{ user.username }}</li>
+                                {% endif %}
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'annunci:annunci_list' %}">Annunci</a></li>
+                                <li><a href="{% url 'profile' %}">Profilo</a></li>
+                                <li><a href="{% url 'chat:chat_list' %}">Chat</a></li>
                             </ul>
                         </nav>
 
-                        {% if user.is_authenticated  %}
+                        {% if user.is_authenticated %}
                             <div class="header__nav__widget">
-                                <a href="./logout" class="primary-btn">Logout</a>
-                                <a href="./register" class="primary-btn">Registrazione</a>
+                                <form method="get" action="{% url 'annunci:create' %}">
+                                    <button class="primary-btn">Crea annuncio</button>
+                                </form>
                             </div>
-
+                            <div class="header__nav__widget">
+                                <form id="logout-form" method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button class="primary-btn">Logout</button>
+                                </form>
+                            </div>
+                        
                         {% else %}
                             <div class="header__nav__widget">
-                                <a href="./" class="primary-btn">Login</a>
+                                <a href="{% url 'login' %}" class="primary-btn">Login</a>
                                 <a href="{% url 'register' %}" class="primary-btn">Registrazione</a>
                             </div>
                         {% endif %}
+
                     </div>
                 </div>
             </div>
@@ -87,7 +98,7 @@
                                     <center>
                                         {% if "notok" in request.GET.auth %}
                                             <div class="alert alert-danger" role="alert">
-                                            Si è arrivati qui in quanto non si dispone dei permessi necessari per il servizio scelto!
+                                            Effettuare il login per accedere al servizio scelto
                                             </div>
                                         {% endif %}
                                         <form method="post"> {% csrf_token %}

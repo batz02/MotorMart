@@ -26,7 +26,11 @@ urlpatterns = [
     path("register/", UserCreateView.as_view(), name="register"),
     path("login/", auth_views.LoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
+    path("profilo/", profile, name='profile'),
+    path("profilo/<pk>", get_profile, name='get_profile'),
 
     path("annunci/", include("annunci.urls")),
+    path("recensione/", include("recensioni.urls")),
+    path("proposta/", include("proposte.urls")),
     path("chat/", include("chat.urls")),
 ]

@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
+from django.contrib.auth.models import User
+from django.http import Http404
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 from .forms import *
 from annunci.models import Annuncio
+from recensioni.models import Recensione
 
 
 def home(request):
@@ -19,7 +23,6 @@ def home(request):
     marche_list = list(marche)
     modelli_list = list(modelli)
     anni_list = list(anni)
-    print(anni_list)
     
     context = {
         'marche': marche_list,
@@ -34,3 +37,37 @@ class UserCreateView(CreateView):
     form_class = CreateUser
     template_name = "user_create.html"
     success_url = reverse_lazy("login")
+
+
+@login_required
+def profile(request):
+
+    annunci = Annuncio.objects.filter(utente=request.user).order_by('marca', 'modello')
+    recensioni = Recensione.objects.filter(venditore=request.user)
+
+    context = {
+        'annunci': annunci,
+        'recensioni': recensioni
+    }
+    
+    return render(request, "profile.html", context)
+
+
+@login_required
+def get_profile(request, pk):
+
+    try:
+        user = User.objects.get(pk=pk)
+    except User.DoesNotExist:
+        raise Http404()
+
+    annunci = Annuncio.objects.filter(utente=user).order_by('marca', 'modello')
+    recensioni = Recensione.objects.filter(venditore=user)
+
+    context = {
+        'annunci': annunci,
+        'recensioni': recensioni
+    }
+    
+    return render(request, "profile.html", context)
+

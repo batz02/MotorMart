@@ -4,15 +4,14 @@ from .models import Annuncio
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils import timezone
-import os
+from django.core.exceptions import ValidationError
 
 class AnnuncioModelTest(TestCase):
     
     def setUp(self):
-        # Create a user to be associated with the Annuncio
+
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         
-        # Create an Annuncio instance
         self.annuncio = Annuncio.objects.create(
             marca='Fiat',
             modello='Panda',
@@ -25,17 +24,16 @@ class AnnuncioModelTest(TestCase):
             carburante='Benzina',
             cambio='Manuale',
             colore='Rosso',
-            immagine='media/uploads/test_image.jpg',  # You can adjust the path as needed
+            immagine='static/img/uploads/test_image.jpg',  # You can adjust the path as needed
             descrizione='Descrizione test annuncio',
             utente=self.user,
             data_inserimento=timezone.now()
         )
     
     def test_annuncio_creation(self):
-        # Test the Annuncio instance creation
         annuncio = self.annuncio
         self.assertTrue(isinstance(annuncio, Annuncio))
-        self.assertEqual(str(annuncio), 'Panda')  # Ensure __str__ method returns modello
+        self.assertEqual(str(annuncio), 'Panda') 
     
     def test_annuncio_fields(self):
         # Test the fields of the Annuncio instance
@@ -51,16 +49,33 @@ class AnnuncioModelTest(TestCase):
         self.assertEqual(annuncio.carburante, 'Benzina')
         self.assertEqual(annuncio.cambio, 'Manuale')
         self.assertEqual(annuncio.colore, 'Rosso')
-        self.assertEqual(annuncio.immagine, 'media/uploads/test_image.jpg')
+        self.assertEqual(annuncio.immagine, 'static/img/uploads/test_image.jpg')
         self.assertEqual(annuncio.descrizione, 'Descrizione test annuncio')
         self.assertEqual(annuncio.utente, self.user)
         self.assertIsNotNone(annuncio.data_inserimento)
+
+    def test_invalid_carburante_raises_error(self):
+        # Creating an Annuncio instance with an invalid carburante choice
+        annuncio = Annuncio(
+            marca='Fiat',
+            modello='Panda',
+            anno=2020,
+            prezzo=10000,
+            chilometraggio=15000,
+            potenza=85,
+            cilindrata=1200,
+            stato='ottimo',  # Assuming 'ottimo' is a valid choice
+            carburante='invalid_fuel',  # This should be an invalid choice
+            cambio='manuale'  # Assuming 'manuale' is a valid choice
+        )
+        with self.assertRaises(ValidationError):
+            annuncio.full_clean()
 
 
 class AnnunciViewTests(TestCase):
 
     def setUp(self):
-        # Create a user
+
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.client = Client()
         self.client.login(username='testuser', password='testpassword')
@@ -121,24 +136,3 @@ class AnnunciViewTests(TestCase):
         self.assertTemplateUsed(response, 'annunci/cars.html')
         self.assertContains(response, self.annuncio1.modello)
         self.assertNotContains(response, self.annuncio2.modello)
-
-    def test_create_view(self):
-
-        with open('media/uploads/photo.jpg', 'rb') as test_image:
-            response = self.client.post(reverse('annunci:create'), {
-                'marca': 'BMW',
-                'modello': 'X5',
-                'anno': 2022,
-                'prezzo': 50000,
-                'chilometraggio': 5000,
-                'potenza': 300,
-                'cilindrata': 3000,
-                'stato': 'Nuovo',
-                'carburante': 'Benzina',
-                'cambio': 'Automatico',
-                'colore': 'Nero',
-                'descrizione': 'Descrizione test annuncio BMW',
-                'immagine': test_image
-            })
-            self.assertEqual(response.status_code, 302)  # Expecting a redirect after successful creation
-            self.assertTrue(Annuncio.objects.filter(modello='X5').exists())

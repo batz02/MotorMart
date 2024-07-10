@@ -20,6 +20,17 @@
     <link rel="stylesheet" href='{% static "./css/owl.carousel.min.css" %}' type="text/css">
     <link rel="stylesheet" href='{% static "./css/slicknav.min.css" %}' type="text/css">
     <link rel="stylesheet" href='{% static "./css/style.css" %}' type="text/css">
+
+    <style>
+        .description-box {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+    
 </head>
 
 <body>
@@ -41,21 +52,29 @@
                     <div class="header__nav">
                         <nav class="header__menu">
                             <ul>
+                                {% if user.is_authenticated %}
+                                    <li>Benvenuto, {{ user.username }}</li>
+                                {% endif %}
                                 <li><a href="{% url 'home' %}">Home</a></li>
-                                <li class="active"><a href="./">Annunci</a></li>
-                                <li><a href="#">Profilo</a></li>
-                             </ul>
+                                <li class="active"><a href="{% url 'annunci:annunci_list' %}">Annunci</a></li>
+                                <li><a href="{% url 'profile' %}">Profilo</a></li>
+                                <li><a href="{% url 'chat:chat_list' %}">Chat</a></li>
+                            </ul>
                         </nav>
 
-                        {% if user.is_authenticated  %}
+                        {% if user.is_authenticated %}
+                            <div class="header__nav__widget">
+                                <form method="get" action="{% url 'annunci:create' %}">
+                                    <button class="primary-btn">Crea annuncio</button>
+                                </form>
+                            </div>
                             <div class="header__nav__widget">
                                 <form id="logout-form" method="post" action="{% url 'logout' %}">
                                     {% csrf_token %}
-                                    <button type="submit" class="primary-btn">Logout</button>
+                                    <button class="primary-btn">Logout</button>
                                 </form>
-                                <a href="#" class="primary-btn">Crea annuncio</a>
                             </div>
-
+                        
                         {% else %}
                             <div class="header__nav__widget">
                                 <a href="{% url 'login' %}" class="primary-btn">Login</a>
@@ -63,7 +82,7 @@
                             </div>
                         {% endif %}
 
-                   </div>
+                    </div>
                 </div>
             </div>
             <div class="canvas__open">
@@ -88,32 +107,36 @@
                                 {% csrf_token %}
                                 <div class="select-list">
                                     <div class="select-list-item">
-                                        <select >
-                                            <option data-display="Anno">Anno</option>
+                                        <p>Anno</p>
+                                        <select name="anno">
+                                            <option data-display=""></option>
                                             {% for anno in anni %}
                                                 <option value="{{anno}}">{{anno}}</option>
                                             {%endfor%}
                                         </select>
                                     </div>
                                     <div class="select-list-item">
-                                        <select>
-                                            <option data-display="Marchio">Marchio</option>
+                                        <p>Marchio</p>
+                                        <select name="marchio">
+                                            <option data-display=" "></option>
                                             {% for marca in marche %}
                                                 <option value="{{marca}}">{{marca}}</option>
                                             {%endfor%}
                                         </select>
                                     </div>
                                     <div class="select-list-item">
-                                        <select>
-                                            <option data-display="Modello">Modello</option>
+                                        <p>Modello</p>
+                                        <select name="modello">
+                                            <option data-display=" "></option>
                                             {% for modello in modelli %}
                                                 <option value="{{modello}}">{{modello}}</option>
                                             {%endfor%}
                                         </select>
                                     </div>
                                     <div class="select-list-item">
-                                        <select>
-                                            <option data-display="Chilometraggio">Chilometraggio</option>
+                                        <p>Chilometraggio</p>
+                                        <select name="chilometraggio">
+                                            <option data-display=" "></option>
                                             <option value="0-25000">0-25000</option>
                                             <option value="25001-50000">25001-50000</option>
                                             <option value="50001-75000">50001-75000</option>
@@ -122,8 +145,9 @@
                                         </select>
                                     </div>
                                     <div class="select-list-item">
-                                        <select>
-                                            <option data-display="Prezzo">Prezzo</option>
+                                        <p>Prezzo</p>
+                                        <select name="prezzo">
+                                            <option data-display=" ">Prezzo</option>
                                             <option value="0-25000">€ &lt;25000</option>
                                             <option value="25001-50000">€ 25001 - € 50000</option>
                                             <option value="50001-75000">€ 50001 - € 75000</option>
@@ -139,41 +163,44 @@
                     </div>
                 </div>
                 <div class="col-lg-9">
+                    {% if messages %}
+                            {% for m in messages %}
+                                <center><p class="description-box">{{ m }}</p></center>
+                            {% endfor %}
+                        {% endif %}
                     
                     <div class="row">
 
-                        
-                        {% for a in object_list %}
-                            <div class="col-lg-4 col-md-4">
-                                <div class="car__item">
-                                    <div class="car__item__pic__slider owl-carousel">
-                                        <img src="{{ MEDIA_URL }}{{ a.immagine }}" alt="">
-                                    </div>
-                                    <div class="car__item__text">
-                                        <div class="car__item__text__inner">
-                                            <div class="label-date">{{ a.anno }}</div>
-                                            {% if user.is_authenticated  %}
-                                                <h5><a href="{% url 'annunci:details' a.pk %}">{{ a.marca }} - {{ a.modello }}</a></h5>
-
-                                            {% else %}
-                                                <h5><a href="#">{{ a.marca }} - {{ a.modello }}</a></h5>
-                                            {% endif %}
-                                            
-                                            <ul>
-                                                <li><span>{{ a.chilometraggio }}</span> km</li>
-                                                <li><span>{{ a.cambio }}</span></li>
-                                                <li><span>{{ a.potenza }}</span> cv</li>
-                                            </ul>
+                        {% if object_list %}
+                            {% for a in object_list %}
+                                <div class="col-lg-4 col-md-4">
+                                    <div class="car__item">
+                                        <div class="car__item__pic__slider owl-carousel">
+                                            <img src="{{ MEDIA_URL }}{{ a.immagine }}" alt="">
                                         </div>
-                                        <div class="car__item__price">
-                                            <span class="car-option">Prezzo</span>
-                                            <h6>€ {{ a.prezzo }}</span></h6>
+                                        <div class="car__item__text">
+                                            <div class="car__item__text__inner">
+                                                <div class="label-date">{{ a.anno }}</div>
+                                                    <h5><a href="{% url 'annunci:details' a.pk %}">{{ a.marca }} - {{ a.modello }}</a></h5>
+                                                <ul>
+                                                    <li><span>{{ a.chilometraggio }}</span> km</li>
+                                                    <li><span>{{ a.cambio }}</span></li>
+                                                    <li><span>{{ a.potenza }}</span> cv</li>
+                                                </ul>
+                                            </div>
+                                            <div class="car__item__price">
+                                                <span class="car-option">Prezzo</span>
+                                                <h6>€ {{ a.prezzo }}</span></h6>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            {%endfor%}
+                        {% else %}
+                            <div class="text-center w-100">
+                                <h3>Nessun annuncio trovato</h3>
                             </div>
-                        {%endfor%}
-                        
+                        {% endif %}                        
                     </div>
                     
                 </div>

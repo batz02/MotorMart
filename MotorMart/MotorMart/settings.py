@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'annunci',
     'chat',
-    'recensioni'
+    'recensioni',
+    'proposte'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'MotorMart.middleware.handle_405',
+    'MotorMart.middleware.NotFoundMiddleware',
+    'MotorMart.middleware.ForbiddenMiddleware',
 ]
 
 ROOT_URLCONF = 'MotorMart.urls'
@@ -118,7 +122,6 @@ USE_I18N = True
 USE_TZ = True
 
 APPEND_SLASH=False
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

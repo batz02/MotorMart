@@ -8,7 +8,7 @@
     <h1>Chat</h1>
     <div id="chat-box">
         {% for message in messages %}
-            <p><strong>{{ message.sender.username }}:</strong> {{ message.content }} <em>{{ message.timestamp }}</em></p>
+            <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}<em> {{ message.timestamp }}</em> </p>
         {% endfor %}
     </div>
     <form id="message-form" method="post">
