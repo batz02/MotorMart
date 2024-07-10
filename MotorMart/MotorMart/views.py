@@ -32,7 +32,6 @@ def home(request):
     return render(request, "home.html", context)
 
 
-
 class UserCreateView(CreateView):
     form_class = CreateUser
     template_name = "user_create.html"

@@ -1,6 +1,7 @@
 from django.http import HttpResponseNotAllowed
 from django.shortcuts import render
 
+
 def handle_405(get_response):
     def middleware(request):
         response = get_response(request)
@@ -8,7 +9,6 @@ def handle_405(get_response):
             return render(request, 'error/405.html')
         return response
     return middleware
-
 
 class NotFoundMiddleware:
     def __init__(self, get_response):
