@@ -10,7 +10,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.chat_id = self.scope['url_route']['kwargs']['chat_id']
         self.chat_group_name = f'chat_{self.chat_id}'
 
-        # Join chat group
         await self.channel_layer.group_add(
             self.chat_group_name,
             self.channel_name
@@ -19,7 +18,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.accept()
 
     async def disconnect(self, close_code):
-        # Leave chat group
         await self.channel_layer.group_discard(
             self.chat_group_name,
             self.channel_name
@@ -33,10 +31,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = await self.get_user(user_id)
         chat = await self.get_chat(self.chat_id)
 
-        # Save the message to the database
         new_message = await self.save_message(chat, user, message)
 
-        # Send message to chat group
         await self.channel_layer.group_send(
             self.chat_group_name,
             {
@@ -52,7 +48,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         sender = event['sender']
         timestamp = event['timestamp']
 
-        # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
             'sender': sender,

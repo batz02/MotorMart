@@ -1,6 +1,7 @@
 from django import forms
 from .models import Annuncio
 
+
 class CreaAnnuncio(forms.ModelForm):
 
     class Meta:

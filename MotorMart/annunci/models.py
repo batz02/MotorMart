@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+
 class Annuncio(models.Model):
 
     cambio_opzioni = [

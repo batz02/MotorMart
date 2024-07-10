@@ -99,8 +99,8 @@
                     <div class="breadcrumb__text">
                         <h2> {{annuncio.marca}}  {{annuncio.modello}}</h2>
                         <div class="breadcrumb__links">
-                            <a href="./index.html"><i class="fa fa-home"></i> Home</a>
-                            <a href="#">Annunci</a>
+                            <a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
+                            <a href="{% url 'annunci:annunci_list' %}">Annunci</a>
                             <span>{{annuncio.marca}}  {{annuncio.modello}}</span>
                         </div>
                     </div>

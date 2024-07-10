@@ -24,7 +24,7 @@ class AnnuncioModelTest(TestCase):
             carburante='Benzina',
             cambio='Manuale',
             colore='Rosso',
-            immagine='static/img/uploads/test_image.jpg',  # You can adjust the path as needed
+            immagine='static/img/uploads/test_image.jpg',
             descrizione='Descrizione test annuncio',
             utente=self.user,
             data_inserimento=timezone.now()
@@ -36,7 +36,6 @@ class AnnuncioModelTest(TestCase):
         self.assertEqual(str(annuncio), 'Panda') 
     
     def test_annuncio_fields(self):
-        # Test the fields of the Annuncio instance
         annuncio = self.annuncio
         self.assertEqual(annuncio.marca, 'Fiat')
         self.assertEqual(annuncio.modello, 'Panda')
@@ -55,7 +54,6 @@ class AnnuncioModelTest(TestCase):
         self.assertIsNotNone(annuncio.data_inserimento)
 
     def test_invalid_carburante_raises_error(self):
-        # Creating an Annuncio instance with an invalid carburante choice
         annuncio = Annuncio(
             marca='Fiat',
             modello='Panda',
@@ -64,9 +62,9 @@ class AnnuncioModelTest(TestCase):
             chilometraggio=15000,
             potenza=85,
             cilindrata=1200,
-            stato='ottimo',  # Assuming 'ottimo' is a valid choice
-            carburante='invalid_fuel',  # This should be an invalid choice
-            cambio='manuale'  # Assuming 'manuale' is a valid choice
+            stato='ottimo',
+            carburante='invalid_fuel',  
+            cambio='manuale' 
         )
         with self.assertRaises(ValidationError):
             annuncio.full_clean()
@@ -80,7 +78,6 @@ class AnnunciViewTests(TestCase):
         self.client = Client()
         self.client.login(username='testuser', password='testpassword')
 
-        # Create some Annuncio instances
         self.annuncio1 = Annuncio.objects.create(
             marca='Fiat',
             modello='Panda',
