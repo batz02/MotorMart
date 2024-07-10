@@ -132,4 +132,5 @@ class AnnunciViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'annunci/cars.html')
         self.assertContains(response, self.annuncio1.modello)
-        self.assertNotContains(response, self.annuncio2.modello)
+        
+

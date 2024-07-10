@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MotorMart</title>
+    <title>MotorMart - Proposta</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
@@ -94,7 +94,9 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="hero__tab__form">
+                                    
                                     <center>
+                                        <h3 style="padding-bottom: 25px;">Proposte:</h3>
                                         {% if messages %}
                                             {% for m in messages %}
                                                 <p>{{ m }}</p>
@@ -103,12 +105,13 @@
                                         
                                         <!-- Only show proposals if the user is the listing owner -->
                                         {% if request.user == listing.utente %}
-                                            <h3>Proposte:</h3>
                                             {% for proposal in proposals %}
                                                 <p>Prezzo proposto: {{ proposal.prezzo }} da {{ proposal.utente.username }}
                                                 {% if proposal.accettata is None %}
-                                                    <a href="{% url 'proposte:accept_proposal' proposal.id %}">Accetta</a>
-                                                    <a href="{% url 'proposte:reject_proposal' proposal.id %}">Rifiuta</a>
+                                                    {% if listing.venduto == None %}
+                                                        <a href="{% url 'proposte:accept_proposal' proposal.id %}">Accetta</a>
+                                                        <a href="{% url 'proposte:reject_proposal' proposal.id %}">Rifiuta</a>
+                                                    {% endif %}
                                                 {% elif proposal.accettata %}
                                                     <span>Accettata</span>
                                                 {% else %}

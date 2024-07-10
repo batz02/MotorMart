@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MotorMart</title>
+    <title>MotorMart - Recensione</title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
 
@@ -95,7 +95,8 @@
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                                 <div class="hero__tab__form">
                                     <center>
-                                        {% if message %}
+                                        <h3 style="padding-bottom: 25px;">Inserimento recensione:</h3>
+                                        {% if messages %}
                                             <p style="color: red;">{{ message }}</p>
                                         {% endif %}
                                         
@@ -104,7 +105,7 @@
                                             {% csrf_token %}
                                             
                                             <div style="margin-bottom: 10px;">
-                                                <label for="rating">Rating:</label>
+                                                <label for="rating">&lt;&lt;---------Rating</label>
                                                 <select id="rating" name="rating" class="form-control" style="display: inline-block; width: auto; margin-left: 5px;">
                                                     <option value="" disabled selected></option>
                                                     <option value="1">1</option>

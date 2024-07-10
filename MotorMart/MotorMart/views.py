@@ -10,27 +10,27 @@ from recensioni.models import Recensione
 
 
 def home(request):
-    
     marche = set()
     modelli = set()
     anni = set()
-    
+
     for annuncio in Annuncio.objects.all():
         marche.add(annuncio.marca)
         modelli.add(annuncio.modello)
         anni.add(annuncio.anno)
-    
-    marche_list = list(marche)
-    modelli_list = list(modelli)
-    anni_list = list(anni)
-    
+
+    marche_list = sorted(list(marche))
+    modelli_list = sorted(list(modelli)) 
+    anni_list = sorted(list(anni), reverse=True) 
+
     context = {
         'marche': marche_list,
         'modelli': modelli_list,
         'anni': anni_list,
     }
-    
+
     return render(request, "home.html", context)
+
 
 
 class UserCreateView(CreateView):

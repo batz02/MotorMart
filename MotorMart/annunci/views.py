@@ -1,9 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic.list import ListView
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
 from .models import *
 from .forms import *
 
@@ -25,9 +23,9 @@ class ListingsView(ListView):
             modelli.add(annuncio.modello)
             anni.add(annuncio.anno)
 
-        context['marche'] = list(marche)
-        context['modelli'] = list(modelli)
-        context['anni'] = list(anni)
+        context['marche'] = sorted(list(marche))
+        context['modelli'] = sorted(list(modelli)) 
+        context['anni'] =  sorted(list(anni), reverse=True) 
 
         return context
 
@@ -39,8 +37,8 @@ def details(request, pk):
     return render(request, "annunci/details.html", ctx)
 
 
-def search(request):
 
+def search(request):
     if request.method == "POST":
 
         anno = request.POST.get('anno')
@@ -63,8 +61,7 @@ def search(request):
                     filter_kwargs['chilometraggio__gte'] = min_chilometraggio
                     filter_kwargs['chilometraggio__lte'] = max_chilometraggio
                 else:
-                    min_chilometraggio = int(chilometraggio)
-                    filter_kwargs['chilometraggio__gte'] = min_chilometraggio
+                    filter_kwargs['chilometraggio__gte'] = int(chilometraggio)
             except ValueError:
                 pass
         if prezzo:
@@ -74,13 +71,25 @@ def search(request):
                     filter_kwargs['prezzo__gte'] = min_prezzo
                     filter_kwargs['prezzo__lte'] = max_prezzo
                 else:
-                    min_prezzo = int(prezzo)
-                    filter_kwargs['prezzo__gte'] = min_prezzo
+                    filter_kwargs['prezzo__gte'] = int(prezzo)
             except ValueError:
                 pass
 
         annunci_filtered = Annuncio.objects.filter(**filter_kwargs)
-        return render(request, "annunci/cars.html", {'object_list': annunci_filtered})
+
+        marche = sorted({annuncio.marca for annuncio in Annuncio.objects.all()})
+        modelli = sorted({annuncio.modello for annuncio in Annuncio.objects.all()})
+        anni = sorted({annuncio.anno for annuncio in Annuncio.objects.all()}, reverse=True)
+
+        context = {
+            'object_list': annunci_filtered,
+            'marche': marche,
+            'modelli': modelli,
+            'anni': anni
+        }
+
+        return render(request, "annunci/cars.html", context)
+
 
 @login_required
 def create(request):

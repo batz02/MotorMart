@@ -1,48 +1,161 @@
 <!DOCTYPE html>
-<html>
+{% load static %}
+<html lang="en">
+
 <head>
-    <title>Chat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MotorMart - Chat</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href='{% static "./css/bootstrap.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/elegant-icons.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/nice-select.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/magnific-popup.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/jquery-ui.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/owl.carousel.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/slicknav.min.css" %}' type="text/css">
+    <link rel="stylesheet" href='{% static "./css/style.css" %}' type="text/css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
+
 <body>
-    <h1>Chat</h1>
-    <div id="chat-box">
-        {% for message in messages %}
-            <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}<em> {{ message.timestamp }}</em> </p>
-        {% endfor %}
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
     </div>
-    <form id="message-form" method="post">
-        {% csrf_token %}
-        <textarea name="content" id="message-input"></textarea>
-        <button type="submit">Send</button>
-    </form>
-    <script>
-        const chatId = {{ chat.id }};
-        const userId = {{ request.user.id }};
-        const wsUrl = `ws://127.0.0.1:8000/ws/chat/${chatId}/`;
-        console.log(wsUrl);
-        const chatSocket = new WebSocket(wsUrl);
 
-        chatSocket.onmessage = function(event) {
-            var data = JSON.parse(event.data);
-            var chatLog = document.querySelector('#chat-box');
-            var messageElement = document.createElement('p');
-            messageElement.innerHTML = `<strong>${data.sender}:</strong> ${data.message} <em>${data.timestamp}</em>`;
-            chatLog.appendChild(messageElement);
-        };
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="{% url 'home' %}"><img src="{% static "./img/logo-new.png" %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <div class="header__nav">
+                        <nav class="header__menu">
+                            <ul>
+                                {% if user.is_authenticated %}
+                                    <li>Benvenuto, {{ user.username }}</li>
+                                {% endif %}
+                                <li><a href="{% url 'home' %}">Home</a></li>
+                                <li><a href="{% url 'annunci:annunci_list' %}">Annunci</a></li>
+                                <li><a href="{% url 'profile' %}">Profilo</a></li>
+                                <li class="active"><a href="{% url 'chat:chat_list' %}">Chat</a></li>
+                            </ul>
+                        </nav>
 
-        document.querySelector('#message-form').onsubmit = function(event) {
-            event.preventDefault();
-            var messageInput = document.querySelector('#message-input');
-            var message = messageInput.value;
+                        {% if user.is_authenticated %}
+                            <div class="header__nav__widget">
+                                <form method="get" action="{% url 'annunci:create' %}">
+                                    <button class="primary-btn">Crea annuncio</button>
+                                </form>
+                            </div>
+                            <div class="header__nav__widget">
+                                <form id="logout-form" method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button class="primary-btn">Logout</button>
+                                </form>
+                            </div>
+                        
+                        {% else %}
+                            <div class="header__nav__widget">
+                                <a href="{% url 'login' %}" class="primary-btn">Login</a>
+                                <a href="{% url 'register' %}" class="primary-btn">Registrazione</a>
+                            </div>
+                        {% endif %}
 
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'user_id': userId
-            }));
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <span class="fa fa-bars"></span>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
 
-            messageInput.value = '';
-        };
-    </script>
+    <!-- Hero Section Begin -->
+    <section class="hero spad set-bg" data-setbg="{% static "./img/hero-bg-created.jpg" %}">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-5">
+                    <div class="hero__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            
+                            
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="hero__tab__form">
+                                    <center>
+                                        <div id="chat-box">
+                                            {% for message in messages %}
+                                                <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}<em> {{ message.timestamp }}</em> </p>
+                                            {% endfor %}
+                                        </div>
+                                        <form id="message-form" method="post">
+                                            {% csrf_token %}
+                                            <textarea name="content" id="message-input"></textarea>
+                                            <button type="submit">Invia</button>
+                                        </form>
+                                        <script>
+                                            const chatId = {{ chat.id }};
+                                            const userId = {{ request.user.id }};
+                                            const wsUrl = `ws://127.0.0.1:8000/ws/chat/${chatId}/`;
+                                            console.log(wsUrl);
+                                            const chatSocket = new WebSocket(wsUrl);
+                                    
+                                            chatSocket.onmessage = function(event) {
+                                                var data = JSON.parse(event.data);
+                                                var chatLog = document.querySelector('#chat-box');
+                                                var messageElement = document.createElement('p');
+                                                messageElement.innerHTML = `<strong>${data.sender}:</strong> ${data.message} <em>${data.timestamp}</em>`;
+                                                chatLog.appendChild(messageElement);
+                                            };
+                                    
+                                            document.querySelector('#message-form').onsubmit = function(event) {
+                                                event.preventDefault();
+                                                var messageInput = document.querySelector('#message-input');
+                                                var message = messageInput.value;
+                                    
+                                                chatSocket.send(JSON.stringify({
+                                                    'message': message,
+                                                    'user_id': userId
+                                                }));
+                                    
+                                                messageInput.value = '';
+                                            };
+                                        </script>  
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Js Plugins -->
+    <script src="{% static "./js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "./js/bootstrap.min.js" %}"></script>
+    <script src="{% static "./js/jquery.nice-select.min.js" %}"></script>
+    <script src="{% static "./js/jquery-ui.min.js" %}"></script>
+    <script src="{% static "./js/jquery.magnific-popup.min.js" %}"></script>
+    <script src="{% static "./js/mixitup.min.js" %}"></script>
+    <script src="{% static "./js/jquery.slicknav.js" %}"></script>
+    <script src="{% static "./js/owl.carousel.min.js" %}"></script>
+    <script src="{% static "./js/main.js" %}"></script>
 </body>
+
 </html>

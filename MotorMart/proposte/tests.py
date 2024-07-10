@@ -17,7 +17,7 @@ class PropostaModelTest(TestCase):
             carburante='benzina',
             cambio='automatico',
             colore='rosso',
-            descrizione='Very well maintained car',
+            descrizione='Auto in ottime condizioni',
             utente=self.user,
             venduto=False
         )
