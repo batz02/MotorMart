@@ -1,22 +1,22 @@
-### Avvio del programma
+### Program Startup
 
-- Avere sul proprio pc installato Python3 e PipEnv
-- Posizionandosi nella cartella del progetto dove è presente il file `Pipfile` avviare la shell di PipEnv tramite il comando:
+- Have Python3 and PipEnv installed on your PC  
+- Navigate to the project folder where the `Pipfile` is located and start the PipEnv shell using the command:  
     ```
     pipenv shell
     ```  
-- Entrando nella cartella `/MotorMart` dove è presente il file `manage.py` usare i seguenti comandi per creare e migrare le tabelle:
+- Enter the `/MotorMart` folder where the `manage.py` file is located and use the following commands to create and migrate the tables:  
     ```
     python3 manage.py makemigrations
     python3 manage.py migrate
-    ```
-- Successivamente è possibile creare un utente admin con permessi completi per loggarsi e gestire alcuni aspetti dell'applicazione, come l'accesso al database, con il comando 
+    ```  
+- Next, you can create an admin user with full permissions to log in and manage certain aspects of the application, such as database access, using the command:  
     ```
     python3 manage.py createsuperuser
-    ```
-    e successivamente inserendo le informazioni richieste
-- Infine è possibile utilizzare l'applicazione eseguendo
+    ```  
+    and then enter the requested information  
+- Finally, you can run the application by executing:  
     ```
     python3 manage.py runserver
-    ```
-    entrando nell'apposito url: `http://127.0.0.1:8000/`
+    ```  
+    and going to the URL: `http://127.0.0.1:8000/`
